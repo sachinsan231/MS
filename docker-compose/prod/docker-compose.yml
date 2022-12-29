@@ -31,7 +31,7 @@ services:
         image: sachinsan2131/loans
         mem_limit: 700m
         ports:
-            - "8080:8080"
+            - "8090:8090"
         depends_on:
             - configserver
         deploy:
@@ -49,7 +49,7 @@ services:
         image: sachinsan2131/cards
         mem_limit: 700m
         ports:
-            - "8080:8080"
+            - "9000:9000"
         depends_on:
             - configserver
         deploy:

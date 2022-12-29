@@ -24,14 +24,14 @@ services:
                 window: 120s
         environment:
             SPRING_PROFILES_ACTIVE: dev
-            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
+            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
         networks:
             - ms-network
     loans:
         image: sachinsan2131/loans
 #        mem_limit: 500m
         ports:
-            - "8080:8080"
+            - "8090:8090"
         depends_on:
             - configserver
         deploy:
@@ -42,14 +42,14 @@ services:
                 window: 120s
         environment:
             SPRING_PROFILES_ACTIVE: dev
-            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
+            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
         networks:
             - ms-network
     cards:
         image: sachinsan2131/cards
  #       mem_limit: 500m
         ports:
-            - "8080:8080"
+            - "9000:9000"
         depends_on:
             - configserver
         deploy:
@@ -60,7 +60,7 @@ services:
                 window: 120s
         environment:
             SPRING_PROFILES_ACTIVE: dev
-            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
+            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
         networks:
             - ms-network
 networks:
