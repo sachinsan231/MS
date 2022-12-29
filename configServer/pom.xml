@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>configServer</artifactId>
+	<artifactId>configserver</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>configServer</name>
+	<name>configserver</name>
 	<description>configServer for MS</description>
 	<properties>
 		<java.version>11</java.version>
@@ -54,6 +54,12 @@
 					<image>
 						<name>sachinsan2131/${project.artifactId}</name>
 					</image>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

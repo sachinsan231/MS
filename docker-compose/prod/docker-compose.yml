@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+    configserver:
+        image: sachinsan2131/configserver
+        mem_limit: 700m
+        ports:
+            - "8071:8071"
+        networks:
+            - ms-network
+
+    accounts:
+        image: sachinsan2131/accounts
+        mem_limit: 700m
+        ports:
+            - "8080:8080"
+        depends_on:
+            - configserver
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 3
+                window: 120s
+        environment:
+            SPRING_PROFILES_ACTIVE: prod
+            SPRING_CONFIG_OMPORT: configserver:http://configserver:8071
+        networks:
+            - ms-network
+    loans:
+        image: sachinsan2131/loans
+        mem_limit: 700m
+        ports:
+            - "8080:8080"
+        depends_on:
+            - configserver
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 3
+                window: 120s
+        environment:
+            SPRING_PROFILES_ACTIVE: prod
+            SPRING_CONFIG_OMPORT: configserver:http://configserver:8071
+        networks:
+            - ms-network
+    cards:
+        image: sachinsan2131/cards
+        mem_limit: 700m
+        ports:
+            - "8080:8080"
+        depends_on:
+            - configserver
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 3
+                window: 120s
+        environment:
+            SPRING_PROFILES_ACTIVE: prod
+            SPRING_CONFIG_OMPORT: configserver:http://configserver:8071
+        networks:
+            - ms-network
+networks:
+    ms-network:
