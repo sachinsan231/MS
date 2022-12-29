@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+
+    accounts:
+        image: sachinsan2131/accounts
+        mem_limit: 700m
+        ports:
+            - "8080:8080"
+        networks:
+            - ms-network
+    loans:
+        image: sachinsan2131/loans
+        mem_limit: 700m
+        ports:
+            - "8080:8080"
+        networks:
+            - ms-network
+    cards:
+        image: sachinsan2131/cards
+        mem_limit: 700m
+        ports:
+            - "8080:8080"
+        networks:
+            - ms-network
+networks:
+    ms-network:
