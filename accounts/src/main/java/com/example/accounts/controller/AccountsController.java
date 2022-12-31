@@ -26,6 +26,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 /**
  * @author User
  *
@@ -68,6 +70,7 @@ public class AccountsController {
 	}
 	
 	@PostMapping("/myAccountDetails")
+	@CircuitBreaker(name = "defaultForCustomerSupportApp", fallbackMethod = "fallbackGetCustomerDetails") // this is with assumption that cards MS is fail
 	public CustomerDetails getCustomerDetails(@RequestBody Customer customer) {
 		Accounts account = accountsRepository.findByCustomerId(customer.getCustomerId());
 		if(account == null) {
@@ -85,5 +88,25 @@ public class AccountsController {
 		return customerDetails;   
 		
 	}
+	
+	
+	private CustomerDetails fallbackGetCustomerDetails(Customer customer, Throwable t) {
+		
+		System.err.println("error: "+t.getMessage());
+		Accounts account = accountsRepository.findByCustomerId(customer.getCustomerId());
+		if(account == null) {
+			return null;
+		}
+		
+		List<Loans> loansDetails = loansFeignClient.getLoansDetails(customer);
+		
+		CustomerDetails customerDetails = new CustomerDetails();
+		customerDetails.setAccounts(account);
+		customerDetails.setLoans(loansDetails);
+		return customerDetails;   
+		
+	}
+	
+	
 
 }
