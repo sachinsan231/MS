@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 
 /**
  * @author User
@@ -70,7 +71,8 @@ public class AccountsController {
 	}
 	
 	@PostMapping("/myAccountDetails")
-	@CircuitBreaker(name = "defaultForCustomerSupportApp", fallbackMethod = "fallbackGetCustomerDetails") // this is with assumption that cards MS is fail
+	//@CircuitBreaker(name = "defaultForCustomerSupportApp", fallbackMethod = "fallbackGetCustomerDetails") // this is with assumption that cards MS is fail
+	@Retry(name = "retryForCustomerSupportApp", fallbackMethod = "fallbackGetCustomerDetails")
 	public CustomerDetails getCustomerDetails(@RequestBody Customer customer) {
 		Accounts account = accountsRepository.findByCustomerId(customer.getCustomerId());
 		if(account == null) {
