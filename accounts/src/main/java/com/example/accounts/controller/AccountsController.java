@@ -26,7 +26,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 
 /**
@@ -109,6 +109,13 @@ public class AccountsController {
 		
 	}
 	
-	
+	@RateLimiter(name = "sayHello", fallbackMethod = "fallbackSayHello")
+	@GetMapping("/sayHello")
+	public String sayHello() {
+		return "Hello, from testApp";
+	}
 
+	private String fallbackSayHello(Throwable t) {
+		return "Hi there, from fallbackSayHello";
+	}
 }
