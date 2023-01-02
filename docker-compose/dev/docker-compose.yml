@@ -39,7 +39,7 @@ services:
         deploy:
             restart_policy:
                 condition: on-failure
-                delay: 5s
+                delay: 15s
                 max_attempts: 3
                 window: 120s
         environment:
@@ -59,7 +59,7 @@ services:
         deploy:
             restart_policy:
                 condition: on-failure
-                delay: 5s
+                delay: 25s
                 max_attempts: 3
                 window: 120s
         environment:
@@ -79,9 +79,32 @@ services:
         deploy:
             restart_policy:
                 condition: on-failure
-                delay: 5s
+                delay: 30s
                 max_attempts: 3
                 window: 120s
+        environment:
+            SPRING_PROFILES_ACTIVE: dev
+            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+        networks:
+            - ms-network
+    gatewayserver:
+        image: sachinsan2131/gatewayserver
+ #       mem_limit: 500m
+        ports:
+            - "8072:8072"
+        depends_on:
+            - configserver
+            - eurekaserver
+            - cards
+            - loans
+            - accounts
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 55s
+                max_attempts: 3
+                window: 180s
         environment:
             SPRING_PROFILES_ACTIVE: dev
             SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
