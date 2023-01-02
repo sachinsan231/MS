@@ -6,6 +6,8 @@ package com.example.accounts.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +37,8 @@ import io.github.resilience4j.retry.annotation.Retry;
  */
 @RestController
 public class AccountsController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AccountsController.class);
 	
 	@Autowired
 	private AccountsRepository accountsRepository;
@@ -74,6 +78,7 @@ public class AccountsController {
 	//@CircuitBreaker(name = "defaultForCustomerSupportApp", fallbackMethod = "fallbackGetCustomerDetails") // this is with assumption that cards MS is fail
 	@Retry(name = "retryForCustomerSupportApp", fallbackMethod = "fallbackGetCustomerDetails")
 	public CustomerDetails getCustomerDetails(@RequestBody Customer customer) {
+		logger.info("getCustomerDetails() started");
 		Accounts account = accountsRepository.findByCustomerId(customer.getCustomerId());
 		if(account == null) {
 			return null;
@@ -86,7 +91,7 @@ public class AccountsController {
 		customerDetails.setAccounts(account);
 		customerDetails.setCards(cardDetails);
 		customerDetails.setLoans(loansDetails);
-		
+		logger.info("getCustomerDetails() ended");
 		return customerDetails;   
 		
 	}
