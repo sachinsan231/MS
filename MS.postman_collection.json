@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7515efdf-7274-4d58-8fe6-e42eeb808288",
+		"_postman_id": "0947e0dc-d89f-4c57-9f10-e03fc4eb1d84",
 		"name": "MS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -28,6 +28,70 @@
 					"port": "8081",
 					"path": [
 						"myAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "account using Gateway",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://host.docker.internal:8072/api/accounts/myAccountDetails",
+					"protocol": "http",
+					"host": [
+						"host",
+						"docker",
+						"internal"
+					],
+					"port": "8072",
+					"path": [
+						"api",
+						"accounts",
+						"myAccountDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "myAccountDetails",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://host.docker.internal:8072/api/accounts/myAccountDetails",
+					"protocol": "http",
+					"host": [
+						"host",
+						"docker",
+						"internal"
+					],
+					"port": "8072",
+					"path": [
+						"api",
+						"accounts",
+						"myAccountDetails"
 					]
 				}
 			},
@@ -234,6 +298,91 @@
 					"port": "8071",
 					"path": [
 						"decrypt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eureka apps",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8070/eureka/apps",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"eureka",
+						"apps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "shutdown",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.178.96:8090/actuator/shutdown",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"178",
+						"96"
+					],
+					"port": "8090",
+					"path": [
+						"actuator",
+						"shutdown"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "gateway routes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://host.docker.internal:8072/actuator/gateway/routes",
+					"protocol": "http",
+					"host": [
+						"host",
+						"docker",
+						"internal"
+					],
+					"port": "8072",
+					"path": [
+						"actuator",
+						"gateway",
+						"routes"
 					]
 				}
 			},
