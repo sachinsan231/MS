@@ -1,0 +1,138 @@
+version: "3.8"
+
+services:
+    prometheus:
+        image: prom/prometheus:latest
+        ports:
+            - "9090:9090"
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+        networks:
+            - ms-network
+    zipkin:
+        image: openzipkin/zipkin
+#        mem_limit: 500m
+        ports:
+            - "9411:9411"
+        networks:
+            - ms-network
+    
+    configserver:
+        image: sachinsan2131/configserver
+#        mem_limit: 500m
+        ports:
+            - "8071:8071"
+        depends_on:
+            - zipkin
+        networks:
+            - ms-network
+    
+    eurekaserver:
+        image: sachinsan2131/eurekaserver
+#        mem_limit: 500m
+        ports:
+            - "8070:8070"
+        depends_on:
+            - configserver
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 10s
+                max_attempts: 3
+                window: 120s
+        environment:
+            SPRING_PROFILES_ACTIVE: default
+            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+            SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+        networks:
+            - ms-network
+
+    accounts:
+        image: sachinsan2131/accounts
+#        mem_limit: 500m
+        ports:
+            - "8080:8080"
+        depends_on:
+            - configserver
+            - eurekaserver
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 15s
+                max_attempts: 3
+                window: 120s
+        environment:
+            SPRING_PROFILES_ACTIVE: dev
+            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+            SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+        networks:
+            - ms-network
+    loans:
+        image: sachinsan2131/loans
+#        mem_limit: 500m
+        ports:
+            - "8090:8090"
+        depends_on:
+            - configserver
+            - eurekaserver
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 25s
+                max_attempts: 3
+                window: 120s
+        environment:
+            SPRING_PROFILES_ACTIVE: dev
+            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+            SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+        networks:
+            - ms-network
+    cards:
+        image: sachinsan2131/cards
+ #       mem_limit: 500m
+        ports:
+            - "9000:9000"
+        depends_on:
+            - configserver
+            - eurekaserver
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 30s
+                max_attempts: 3
+                window: 120s
+        environment:
+            SPRING_PROFILES_ACTIVE: dev
+            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+            SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+        networks:
+            - ms-network
+    gatewayserver:
+        image: sachinsan2131/gatewayserver
+ #       mem_limit: 500m
+        ports:
+            - "8072:8072"
+        depends_on:
+            - configserver
+            - eurekaserver
+            - cards
+            - loans
+            - accounts
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 55s
+                max_attempts: 3
+                window: 180s
+        environment:
+            SPRING_PROFILES_ACTIVE: dev
+            SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+            SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
+        networks:
+            - ms-network
+networks:
+    ms-network:
