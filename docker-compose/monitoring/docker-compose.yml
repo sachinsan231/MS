@@ -1,6 +1,17 @@
 version: "3.8"
 
 services:
+    grafana:
+        image: grafana/grafana:latest
+        ports:
+            - "3000:3000"
+        environment:
+            - GF_SECURITY_ADMIN_USER=admin
+            - GF_SECURITY_ADMIN_PASSWORD=password
+        depends_on:
+            - prometheus
+        networks:
+            - ms-network
     prometheus:
         image: prom/prometheus:latest
         ports:
