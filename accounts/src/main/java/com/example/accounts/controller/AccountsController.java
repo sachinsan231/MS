@@ -5,6 +5,7 @@ package com.example.accounts.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,10 +120,12 @@ public class AccountsController {
 	@RateLimiter(name = "sayHello", fallbackMethod = "fallbackSayHello")
 	@GetMapping("/sayHello")
 	public String sayHello() {
-		return "Hello, from testApp";
+		String hostname = System.getenv("HOSTNAME") == null ? "localhost" : System.getenv("HOSTNAME").toString();
+		return "Hello, from testApp from cluster : "+hostname;
 	}
 
 	private String fallbackSayHello(Throwable t) {
+		logger.error(" from fallbackSayHello : "+t.getMessage());
 		return "Hi there, from fallbackSayHello";
 	}
 }
