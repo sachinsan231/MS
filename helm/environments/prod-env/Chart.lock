@@ -1,0 +1,27 @@
+dependencies:
+- name: ms-common
+  repository: file://../../ms-common
+  version: 0.1.0
+- name: zipkin
+  repository: file://../../ms-services/zipkin
+  version: 0.1.0
+- name: configserver
+  repository: file://../../ms-services/configserver
+  version: 0.1.0
+- name: eurekaserver
+  repository: file://../../ms-services/eurekaserver
+  version: 0.1.0
+- name: accounts
+  repository: file://../../ms-services/accounts
+  version: 0.1.0
+- name: cards
+  repository: file://../../ms-services/cards
+  version: 0.1.0
+- name: loans
+  repository: file://../../ms-services/loans
+  version: 0.1.0
+- name: gatewayserver
+  repository: file://../../ms-services/gatewayserver
+  version: 0.1.0
+digest: sha256:4c1d4c3a384ad17628298980d8a47190a00d18f16c25510699279525d117de1d
+generated: "2023-01-04T17:50:53.0057407+01:00"

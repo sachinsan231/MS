@@ -1,0 +1,23 @@
+# Default values for ms-services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+deploymentName: cards-deployment
+deploymentLabel: cards
+containerPort: 9000
+
+image:
+   repository: sachinsan2131/cards
+   tag: latest
+
+service:
+   type: LoadBalancer
+   port: 9000
+   targetPort: 9000
+   
+profile_enabled: true
+zipkin_enabled: true 
+config_enabled: true 
+eureka_enabled: true 
+

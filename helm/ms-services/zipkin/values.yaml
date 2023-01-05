@@ -1,0 +1,23 @@
+# Default values for ms-services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+deploymentName: zipkin-deployment
+deploymentLabel: zipkin
+containerPort: 9411
+
+image:
+   repository: openzipkin/zipkin
+   tag: latest
+
+service:
+   type: LoadBalancer
+   port: 9411
+   targetPort: 9411
+   
+profile_enabled: false
+zipkin_enabled: false 
+config_enabled: false 
+eureka_enabled: false 
+

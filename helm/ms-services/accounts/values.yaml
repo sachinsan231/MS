@@ -1,0 +1,23 @@
+# Default values for ms-services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+deploymentName: accounts-deployment
+deploymentLabel: accounts
+containerPort: 8080
+
+image:
+   repository: sachinsan2131/accounts
+   tag: latest
+
+service:
+   type: LoadBalancer
+   port: 8080
+   targetPort: 8080
+   
+profile_enabled: true
+zipkin_enabled: true 
+config_enabled: true 
+eureka_enabled: true 
+

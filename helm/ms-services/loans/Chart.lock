@@ -1,0 +1,6 @@
+dependencies:
+- name: ms-common
+  repository: file://../../ms-common
+  version: 0.1.0
+digest: sha256:48bbb2ae531830c126c4fa98a98ae4db3ef8a3ba6d2896933c90626f2668a458
+generated: "2023-01-04T17:29:35.7419347+01:00"
