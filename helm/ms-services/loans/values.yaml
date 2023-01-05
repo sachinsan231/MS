@@ -12,7 +12,7 @@ image:
    tag: latest
 
 service:
-   type: LoadBalancer
+   type: ClusterIP
    port: 8090
    targetPort: 8090
    
