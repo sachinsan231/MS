@@ -12,7 +12,7 @@ image:
    tag: latest
 
 service:
-   type: NodePort
+   type: ClusterIP
    port: 8080
    targetPort: 8080
    
@@ -20,4 +20,5 @@ profile_enabled: true
 zipkin_enabled: true 
 config_enabled: true 
 eureka_enabled: true 
+keycloak_enabled: false
 

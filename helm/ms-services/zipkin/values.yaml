@@ -20,4 +20,5 @@ profile_enabled: false
 zipkin_enabled: false 
 config_enabled: false 
 eureka_enabled: false 
+keycloak_enabled: false
 
