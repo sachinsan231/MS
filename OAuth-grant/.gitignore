@@ -1,0 +1,7 @@
+helm/ms-services/cards/charts/
+helm/ms-services/gatewayserver/charts/
+helm/ms-services/loans/charts/
+helm/ms-services/accounts/charts/
+helm/ms-services/eurekaserver/charts/
+helm/ms-services/configserver/charts/
+helm/ms-services/accounts/charts/

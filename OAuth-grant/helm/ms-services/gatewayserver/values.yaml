@@ -1,0 +1,25 @@
+# Default values for ms-services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+deploymentName: gatewayserver-deployment
+deploymentLabel: gatewayserver
+containerPort: 8072
+
+image:
+   repository: sachinsan2131/gatewayserver
+   tag: latest
+
+service:
+   type: LoadBalancer
+   port: 8072
+   targetPort: 8072
+   
+profile_enabled: true
+zipkin_enabled: true 
+config_enabled: true 
+eureka_enabled: true 
+keycloak_enabled: true
+resouceserver_enabled: false
+

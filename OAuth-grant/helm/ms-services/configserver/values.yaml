@@ -1,0 +1,25 @@
+# Default values for ms-services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+deploymentName: configserver-deployment
+deploymentLabel: configserver
+containerPort: 8071
+
+image:
+   repository: sachinsan2131/configserver
+   tag: latest
+
+service:
+   type: ClusterIP
+   port: 8071
+   targetPort: 8071
+   
+profile_enabled: true
+zipkin_enabled: true 
+config_enabled: false 
+eureka_enabled: false 
+keycloak_enabled: false
+resouceserver_enabled: false
+
