@@ -1,0 +1,103 @@
+dckr_pat_9e5bIrgWxmj0cE2MXhxwjzjP2_M
+docker login -u sachinsan2131
+
+docker run -d -p 9411:9411 openzipkin/zipkin
+http://localhost:9411/zipkin/
+
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+
+localhost:15672 guest/guest
+
+create queue in rabbitmq web ui as zipkin
+
+add dependency to project pom.xml
+
+<dependency>
+	<groupId>org.springframework.amqp</groupId>
+	<artifactId>spring-rabbit</artifactId>
+</dependency>
+
+properties
+#messages to rabbit mq
+spring.zipkin.sender.type=rabbit
+#queue name
+spring.zipkin.rabbitmq.queue=zipkin
+spring.rabbitmq.host=localhost
+spring.rabbitmq.port=15672
+spring.rabbitmq.username=guest
+spring.rabbitmq.password==guest 
+
+# set up grafana
+1. access grafana using localhost:3000 with credentials mentioned un docker file
+2. add promethues as data source ( url: http://promethues:9090 -> save & test
+3. import ID from grafana web site to view sample dashboard (https://grafana.com/grafana/dashboards/11378-justai-system-monitor/)
+
+
+For alert create public endpoint from: https://requestbin.com/
+
+
+https://helm.sh/
+helm create ms-common
+helm install sample-deployment ms-common
+helm upgrade sample-deployment ms-common
+helm delete sample-deployment
+helm dependencies build
+helm create zipkin
+helm create configserver
+helm create eurekaserver
+helm create loans
+helm create cards
+helm create gatewayserver
+
+helm\environments\prod-env>helm template . // generate yaml file for us
+helm\environments>helm install dev-deployment dev-env
+
+to scale up, update replica value in values.yaml of each service and compile env again (environments\dev-env>helm dependencies build) and execute helm\environments>helm upgrade dev-deployment dev-env
+helm history dev-deployment
+helm rollback dev-deployment 1
+helm uninstall dev-deployment
+
+
+NodePort expose internal port for communication:
+kubectl get nodes --output wide
+
+gke-ms-default-pool-e16847e6-7704 -Y  35.224.57.126:30040
+gke-ms-default-pool-e16847e6-7p77  34.28.34.95   
+gke-ms-default-pool-e16847e6-c9fz -Y   34.171.52.209:30040
+
+kubectl describe pod accounts-deployment-694dd6d9c5-52rlf
+
+get node port from account-yaml in google cloud console : nodePort: 30040
+
+create rule to expose port 30040:
+gcloud projects list
+gcloud config set project microservices-373613
+gcloud compute firewall-rules create ms-nodeport --allow tcp:30040
+
+
+docker run -p 7080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:18.0.0 start-dev
+
+id: ms-callcenter
+secret: LleUWNMCJFPUH2euam73URCpsq66PB0b
+https://jwt.io/
+
+https://bitnami.com/stack/keycloak/helm
+INSTALLATION
+  
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install my-release bitnami/keycloak
+http://localhost:7080/realms/master/.well-known/openid-configuration
+
+kubeconfig entry generated for ms.
+apiVersion: v1
+data:
+  admin-password: XEBio0rkd7
+  
+  echo password: $(kubectl get secret --namespace default my-release-keycloak -o jsonpath="{.data.admin-password}" | base64 --decode )
+
+http://localhost:8072/api/accounts/account/properties
+34.67.125.71:8072/api/accounts/account/properties
+
+mutual tls
